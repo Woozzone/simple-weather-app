@@ -6,8 +6,10 @@ import Temperature from '../components/Temperature';
 import City from '../components/City';
 import WeatherCondition from '../components/WeatherCondition';
 import CalcDate from '../components/CalcDate';
+import Stats from '../components/Stats';
 
 const WeatherWrapper = styled.div`
+  position: relative;
   min-width: 320px;
 `;
 
@@ -59,7 +61,9 @@ class Weather extends React.Component {
             place: result.name,
             temperature: Math.round(result.main.temp),
             weatherCondition: this.parseWeatherCondition(result.weather),
-            date: result.dt
+            date: result.dt,
+            humidity: result.main.humidity,
+            windSpeed: result.wind.speed
           });
         })
         .catch(() => {
@@ -76,6 +80,10 @@ class Weather extends React.Component {
       <WeatherWrapper>
         <WeatherCondition value={this.state.weatherCondition} />
         <Temperature value={this.state.temperature} />
+        <Stats
+          windSpeed={this.state.windSpeed}
+          humidity={this.state.humidity}
+        />
         <CalcDate value={this.state.date} />
         <City name={this.state.place} />
       </WeatherWrapper>
