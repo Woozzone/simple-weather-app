@@ -3,6 +3,8 @@ import React from 'react';
 // Components
 import Temperature from '../components/Temperature';
 import City from '../components/City';
+import WeatherCondition from '../components/WeatherCondition';
+import Date from '../components/Date';
 
 class Weather extends React.Component {
   constructor(props) {
@@ -21,6 +23,16 @@ class Weather extends React.Component {
     });
   }
 
+  parseWeatherCondition(array) {
+    let weatherCondition = [];
+
+    array.forEach(condition => {
+      weatherCondition.push(condition.description);
+    });
+
+    return weatherCondition.join(', ');
+  }
+
   componentDidMount() {
     this.getCoords().then(position => {
       this.setState({
@@ -36,10 +48,13 @@ class Weather extends React.Component {
       fetch(url)
         .then(res => res.json())
         .then(result => {
+          console.log(result);
           this.setState({
             isLoaded: true,
             place: result.name,
-            temperature: result.main.temp
+            temperature: result.main.temp,
+            weatherCondition: this.parseWeatherCondition(result.weather),
+            date: result.dt
           });
         })
         .catch(() => {
@@ -51,10 +66,13 @@ class Weather extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div>
+        <WeatherCondition value={this.state.weatherCondition} />
         <Temperature value={this.state.temperature} />
-        <City name={this.state.place} />
+        <Date value={this.state.date} marginTop={20} />
+        <City name={this.state.place} marginTop={5} />
       </div>
     );
   }
