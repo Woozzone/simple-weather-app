@@ -52,7 +52,7 @@ class Weather extends React.Component {
           this.setState({
             isLoaded: true,
             place: result.name,
-            temperature: result.main.temp,
+            temperature: Math.round(result.main.temp),
             weatherCondition: this.parseWeatherCondition(result.weather),
             date: result.dt
           });
