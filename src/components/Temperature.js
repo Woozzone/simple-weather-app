@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 const TemperatureWrapper = styled.div`
   font-family: 'Righteous', cursive;
-  font-size: 72px;
-  color: #41ead4;
   text-align: center;
+  font-size: 72px;
+  color: #e5ffde;
 `;
 
 const Sup = styled.sup`
