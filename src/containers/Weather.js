@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 // Components
+import Loader from '../components/Loader';
 import Temperature from '../components/Temperature';
 import City from '../components/City';
 import WeatherCondition from '../components/WeatherCondition';
@@ -52,6 +53,7 @@ class Weather extends React.Component {
       }&lon=${this.state.longitude}&appid=${
         process.env.REACT_APP_API_KEY
       }&units=metric`;
+      console.log(url);
       fetch(url)
         .then(res => res.json())
         .then(result => {
@@ -76,18 +78,22 @@ class Weather extends React.Component {
 
   render() {
     console.log(this.state);
-    return (
-      <WeatherWrapper>
-        <WeatherCondition value={this.state.weatherCondition} />
-        <Temperature value={this.state.temperature} />
-        <Stats
-          windSpeed={this.state.windSpeed}
-          humidity={this.state.humidity}
-        />
-        <CalcDate value={this.state.date} />
-        <City name={this.state.place} />
-      </WeatherWrapper>
-    );
+    if (this.state.isLoaded) {
+      return (
+        <WeatherWrapper>
+          <WeatherCondition value={this.state.weatherCondition} />
+          <Temperature value={this.state.temperature} />
+          <Stats
+            windSpeed={this.state.windSpeed}
+            humidity={this.state.humidity}
+          />
+          <CalcDate value={this.state.date} />
+          <City name={this.state.place} />
+        </WeatherWrapper>
+      );
+    } else {
+      return <Loader />;
+    }
   }
 }
 
