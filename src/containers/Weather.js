@@ -1,5 +1,9 @@
 import React from 'react';
 
+// Components
+import Temperature from '../components/Temperature';
+import City from '../components/City';
+
 class Weather extends React.Component {
   constructor(props) {
     super(props);
@@ -34,6 +38,7 @@ class Weather extends React.Component {
         .then(result => {
           this.setState({
             isLoaded: true,
+            place: result.name,
             temperature: result.main.temp
           });
         })
@@ -46,7 +51,12 @@ class Weather extends React.Component {
   }
 
   render() {
-    return <div>{this.state.temperature}</div>;
+    return (
+      <div>
+        <Temperature value={this.state.temperature} />
+        <City name={this.state.place} />
+      </div>
+    );
   }
 }
 
