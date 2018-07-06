@@ -4,7 +4,7 @@ import React from 'react';
 import Temperature from '../components/Temperature';
 import City from '../components/City';
 import WeatherCondition from '../components/WeatherCondition';
-import Date from '../components/Date';
+import CalcDate from '../components/CalcDate';
 
 class Weather extends React.Component {
   constructor(props) {
@@ -71,7 +71,7 @@ class Weather extends React.Component {
       <div>
         <WeatherCondition value={this.state.weatherCondition} />
         <Temperature value={this.state.temperature} />
-        <Date value={this.state.date} marginTop={20} />
+        <CalcDate value={this.state.date} marginTop={20} />
         <City name={this.state.place} marginTop={5} />
       </div>
     );
