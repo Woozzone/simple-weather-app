@@ -7,11 +7,11 @@ const CityWrapper = styled.div`
   font-family: 'Work Sans', sans-serif;
   color: #fff;
   text-align: center;
-  margin-top: ${props => props.marginTop}px;
+  margin-top: 5px;
 `;
 
 const City = props => {
-  return <CityWrapper marginTop={props.marginTop}>{props.name}</CityWrapper>;
+  return <CityWrapper>{props.name}</CityWrapper>;
 };
 
 export default City;

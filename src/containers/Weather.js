@@ -1,10 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 
 // Components
 import Temperature from '../components/Temperature';
 import City from '../components/City';
 import WeatherCondition from '../components/WeatherCondition';
 import CalcDate from '../components/CalcDate';
+
+const WeatherWrapper = styled.div`
+  min-width: 320px;
+`;
 
 class Weather extends React.Component {
   constructor(props) {
@@ -68,12 +73,12 @@ class Weather extends React.Component {
   render() {
     console.log(this.state);
     return (
-      <div>
+      <WeatherWrapper>
         <WeatherCondition value={this.state.weatherCondition} />
         <Temperature value={this.state.temperature} />
-        <CalcDate value={this.state.date} marginTop={20} />
-        <City name={this.state.place} marginTop={5} />
-      </div>
+        <CalcDate value={this.state.date} />
+        <City name={this.state.place} />
+      </WeatherWrapper>
     );
   }
 }

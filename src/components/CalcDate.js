@@ -7,7 +7,7 @@ const DateWrapper = styled.div`
   font-family: 'Work Sans', sans-serif;
   font-weight: 200;
   color: #fff;
-  margin-top: ${props => props.marginTop}px;
+  margin-top: 20px;
 `;
 
 const CalcDate = props => {
@@ -37,11 +37,7 @@ const CalcDate = props => {
   ];
   const day = days[date.getDay()];
   const month = months[date.getMonth()];
-  return (
-    <DateWrapper marginTop={props.marginTop}>
-      {`${day}, ${date.getDate()} ${month}`}
-    </DateWrapper>
-  );
+  return <DateWrapper>{`${day}, ${date.getDate()} ${month}`}</DateWrapper>;
 };
 
 export default CalcDate;
