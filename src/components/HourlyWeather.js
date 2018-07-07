@@ -6,15 +6,33 @@ import Temperature from './Temperature';
 import WeatherCondition from './WeatherCondition';
 
 const HourlyWeatherWrapper = styled.div`
-  display: flex;
+  position: relative;
+  left: 50%;
+  width: 320px;
   margin-top: 50px;
+  overflow: hidden;
+  transform: translateX(-50%);
+`;
+
+const HourlyWeatherSlide = styled.div`
+  display: flex;
+  transition: transform 0.5s ease;
+  transform: translateX(
+    ${props => (props.slideIndent ? props.slideIndent : 0)}px
+  );
 `;
 
 const HourlyWeatherItem = styled.div`
   cursor: pointer;
-  width: 40px;
+  min-width: ${props => (props.className === 'active' ? 70 : 50)}px;
   padding: 10px 5px;
   text-align: center;
+  transition: all 0.2s ease;
+  opacity: ${props => (props.className === 'active' ? 1 : 0.7)};
+  border-top: 2px solid
+    ${props =>
+      props.className === 'active' ? '#e5ffde' : 'rgba(255,255,255, 0.1)'};
+  user-select: none;
 `;
 
 const Time = styled.div`
@@ -25,8 +43,16 @@ const Time = styled.div`
 `;
 
 class HourlyWeather extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      slideIndent: 0
+    };
+  }
+
   getTemperature(item) {
-    return <Temperature value={Math.ceil(item.main.temp)} />;
+    return <Temperature value={Math.round(item.main.temp)} />;
   }
 
   getTime(item) {
@@ -41,10 +67,25 @@ class HourlyWeather extends React.Component {
     return <WeatherCondition value={item.weather} />;
   }
 
+  scrollSlide(i) {
+    const value = i < 2 ? -i * 60 : i > 37 ? -i * 60 + 240 : -i * 60 + 120;
+    this.setState({
+      slideIndent: value
+    });
+  }
+
   render() {
     const list = this.props.list.map((item, i) => {
+      const activeClass = this.props.active === item && 'active';
       return (
-        <HourlyWeatherItem key={i} onClick={() => this.props.onClick(i)}>
+        <HourlyWeatherItem
+          className={activeClass}
+          key={i}
+          onClick={() => {
+            this.props.onClick(i);
+            this.scrollSlide(i);
+          }}
+        >
           {this.getWeatherCondition(item)}
           {this.getTemperature(item)}
           {this.getTime(item)}
@@ -52,7 +93,13 @@ class HourlyWeather extends React.Component {
       );
     });
 
-    return <HourlyWeatherWrapper>{list}</HourlyWeatherWrapper>;
+    return (
+      <HourlyWeatherWrapper>
+        <HourlyWeatherSlide slideIndent={this.state.slideIndent}>
+          {list}
+        </HourlyWeatherSlide>
+      </HourlyWeatherWrapper>
+    );
   }
 }
 
