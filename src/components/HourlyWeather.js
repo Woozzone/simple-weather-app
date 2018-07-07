@@ -24,8 +24,9 @@ const HourlyWeatherSlide = styled.div`
 
 const HourlyWeatherItem = styled.div`
   cursor: pointer;
-  min-width: ${props => (props.className === 'active' ? 70 : 50)}px;
+  min-width: 50px;
   padding: 10px 5px;
+  margin: 0 2px;
   text-align: center;
   transition: all 0.2s ease;
   opacity: ${props => (props.className === 'active' ? 1 : 0.7)};
@@ -47,8 +48,11 @@ class HourlyWeather extends React.Component {
     super(props);
 
     this.state = {
-      slideIndent: 0
+      slideIndent: 0,
+      currentItem: 0
     };
+
+    this.onWheel = this.onWheel.bind(this);
   }
 
   getTemperature(item) {
@@ -74,26 +78,47 @@ class HourlyWeather extends React.Component {
         indent = 0;
         break;
       case 1:
-        indent = 60;
+        indent = 64;
         break;
       case 38:
-        indent = 180;
+        indent = 192;
         break;
       case 39:
-        indent = 240;
+        indent = 256;
         break;
       default:
-        indent = 120;
+        indent = 128;
     }
-    const value = -i * 60 + indent;
+    const value = -i * 64 + indent;
     this.setState({
-      slideIndent: value
+      slideIndent: value,
+      currentItem: i
+    });
+  }
+
+  onWheel(e) {
+    let indent = 0;
+    let delta = 0;
+    let forward = e.deltaY > 0;
+    if (forward) {
+      this.state.slideIndent > -2240 && (indent = -64);
+      this.state.currentItem < 39 && (delta = 1);
+    } else {
+      this.state.slideIndent < 0 && (indent = 64);
+      this.state.currentItem > 0 && (delta = -1);
+    }
+
+    this.setState(prevState => {
+      return {
+        slideIndent: prevState.slideIndent + indent,
+        currentItem: prevState.currentItem + delta
+      };
     });
   }
 
   render() {
     const list = this.props.list.map((item, i) => {
-      const activeClass = this.props.active === item && 'active';
+      const activeClass = this.state.currentItem === i && 'active';
       return (
         <HourlyWeatherItem
           className={activeClass}
@@ -112,7 +137,10 @@ class HourlyWeather extends React.Component {
 
     return (
       <HourlyWeatherWrapper>
-        <HourlyWeatherSlide slideIndent={this.state.slideIndent}>
+        <HourlyWeatherSlide
+          onWheel={this.onWheel}
+          slideIndent={this.state.slideIndent}
+        >
           {list}
         </HourlyWeatherSlide>
       </HourlyWeatherWrapper>
