@@ -68,7 +68,24 @@ class HourlyWeather extends React.Component {
   }
 
   scrollSlide(i) {
-    const value = i < 2 ? -i * 60 : i > 37 ? -i * 60 + 240 : -i * 60 + 120;
+    let indent;
+    switch (i) {
+      case 0:
+        indent = 0;
+        break;
+      case 1:
+        indent = 60;
+        break;
+      case 38:
+        indent = 180;
+        break;
+      case 39:
+        indent = 240;
+        break;
+      default:
+        indent = 120;
+    }
+    const value = -i * 60 + indent;
     this.setState({
       slideIndent: value
     });
