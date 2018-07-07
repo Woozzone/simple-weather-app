@@ -34,13 +34,14 @@ class Weather extends React.Component {
   }
 
   setCurrentWeather(index) {
-    this.setState({
-      temperature: Math.round(this.state.response.list[index].main.temp),
-      weatherCondition: this.state.response.list[index].weather,
-      date: this.state.response.list[index].dt,
-      humidity: this.state.response.list[index].main.humidity,
-      windSpeed: this.state.response.list[index].wind.speed
-    });
+    this.setState(prevState => ({
+      active: prevState.response.list[index],
+      temperature: Math.round(prevState.response.list[index].main.temp),
+      weatherCondition: prevState.response.list[index].weather,
+      date: prevState.response.list[index].dt,
+      humidity: prevState.response.list[index].main.humidity,
+      windSpeed: prevState.response.list[index].wind.speed
+    }));
   }
 
   componentDidMount() {
@@ -55,6 +56,7 @@ class Weather extends React.Component {
       }&lon=${this.state.longitude}&appid=${
         process.env.REACT_APP_API_KEY
       }&units=metric`;
+
       fetch(url)
         .then(res => res.json())
         .then(result => {
@@ -62,6 +64,7 @@ class Weather extends React.Component {
             response: result,
             isLoaded: true,
             place: result.city.name,
+            active: result.list[0],
             temperature: Math.round(result.list[0].main.temp),
             weatherCondition: result.list[0].weather,
             date: result.list[0].dt,
@@ -100,6 +103,7 @@ class Weather extends React.Component {
           <HourlyWeather
             onClick={this.setCurrentWeather}
             list={this.state.list}
+            active={this.state.active}
           />
         </div>
       );
