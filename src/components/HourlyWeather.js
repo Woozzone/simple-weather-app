@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import Temperature from './Temperature';
 import WeatherCondition from './WeatherCondition';
 
+const ITEM_WIDTH = 64;
+
 const HourlyWeatherWrapper = styled.div`
   position: relative;
   left: 50%;
@@ -47,11 +49,7 @@ class HourlyWeather extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      slideIndent: 0,
-      currentItem: 0
-    };
-
+    this.slideIndent = 0;
     this.onWheel = this.onWheel.bind(this);
   }
 
@@ -71,40 +69,37 @@ class HourlyWeather extends React.Component {
     return <WeatherCondition value={item.weather} />;
   }
 
-  scrollSlide(i) {
+  calculateSlideIndent = i => {
     let indent;
     switch (i) {
       case 0:
         indent = 0;
         break;
       case 1:
-        indent = 64;
+        indent = ITEM_WIDTH;
         break;
       case 38:
-        indent = 192;
+        indent = ITEM_WIDTH * 3;
         break;
       case 39:
-        indent = 256;
+        indent = ITEM_WIDTH * 4;
         break;
       default:
-        indent = 128;
+        indent = ITEM_WIDTH * 2;
     }
-    const value = -i * 64 + indent;
-    this.setState({
-      slideIndent: value,
-      currentItem: i
-    });
-  }
+    this.slideIndent = -i * ITEM_WIDTH + indent;
+  };
 
   onWheel(e) {
+    let active = this.props.active;
     let indent = 0;
     let delta = 0;
     let forward = e.deltaY > 0;
     if (forward) {
-      this.state.slideIndent > -2240 && (indent = -64);
+      this.slideIndent > -2240 && (indent = -ITEM_WIDTH);
       this.state.currentItem < 39 && (delta = 1);
     } else {
-      this.state.slideIndent < 0 && (indent = 64);
+      this.state.slideIndent < 0 && (indent = ITEM_WIDTH);
       this.state.currentItem > 0 && (delta = -1);
     }
 
@@ -118,14 +113,13 @@ class HourlyWeather extends React.Component {
 
   render() {
     const list = this.props.list.map((item, i) => {
-      const activeClass = this.state.currentItem === i && 'active';
+      const activeClass = this.props.active === item && 'active';
       return (
         <HourlyWeatherItem
           className={activeClass}
           key={i}
           onClick={() => {
-            this.props.onClick(i);
-            this.scrollSlide(i);
+            this.props.onClick(i, this.calculateSlideIndent);
           }}
         >
           {this.getWeatherCondition(item)}
@@ -139,7 +133,7 @@ class HourlyWeather extends React.Component {
       <HourlyWeatherWrapper>
         <HourlyWeatherSlide
           onWheel={this.onWheel}
-          slideIndent={this.state.slideIndent}
+          slideIndent={this.slideIndent}
         >
           {list}
         </HourlyWeatherSlide>
