@@ -16,7 +16,7 @@ const WeatherConditionDescription = styled.div`
 
 const WeatherConditionIcon = styled.i`
   font-size: ${props => (props.fs ? props.fs : 18)}px;
-  margin: 0 10px 15px;
+  margin: 5px 10px 15px;
 `;
 const WeatherConditionIcons = styled.div`
   display: flex;
