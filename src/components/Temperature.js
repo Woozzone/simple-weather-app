@@ -4,22 +4,22 @@ import styled from 'styled-components';
 const TemperatureWrapper = styled.div`
   font-family: 'Righteous', cursive;
   text-align: center;
-  font-size: 72px;
+  font-size: ${props => (props.fs ? props.fs : 18)}px
   color: #e5ffde;
 `;
 
 const Sup = styled.sup`
   position: relative;
-  top: -33px;
-  left: 10px;
-  font-size: 36px;
+  top: ${props => (props.fs ? -props.fs / 2 + props.fs / 20 : -9)}px
+  left: ${props => (props.fs ? props.fs / 10 : 2)}px;
+  font-size: ${props => (props.fs ? props.fs / 2 : 9)}px;
 `;
 
 const Temperature = props => {
   return (
-    <TemperatureWrapper>
+    <TemperatureWrapper fs={props.fs}>
       {props.value}
-      <Sup>o</Sup>
+      <Sup fs={props.fs}>o</Sup>
     </TemperatureWrapper>
   );
 };
