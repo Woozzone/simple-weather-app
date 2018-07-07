@@ -31,16 +31,6 @@ class Weather extends React.Component {
     });
   }
 
-  parseWeatherCondition(array) {
-    let weatherCondition = [];
-
-    array.forEach(condition => {
-      weatherCondition.push(condition.description);
-    });
-
-    return weatherCondition.join(', ');
-  }
-
   componentDidMount() {
     this.getCoords().then(position => {
       this.setState({
@@ -62,7 +52,7 @@ class Weather extends React.Component {
             isLoaded: true,
             place: result.name,
             temperature: Math.round(result.main.temp),
-            weatherCondition: this.parseWeatherCondition(result.weather),
+            weatherCondition: result.weather,
             date: result.dt,
             humidity: result.main.humidity,
             windSpeed: result.wind.speed
