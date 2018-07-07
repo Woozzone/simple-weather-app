@@ -6,17 +6,17 @@ const WeatherConditionWrapper = styled.div`
   color: #fff;
 `;
 
-const WeatherConditionValue = styled.div`
+const WeatherConditionDescription = styled.div`
   margin-bottom: 15px;
   font-family: 'Righteous', cursive;
-  font-size: 18px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 `;
 
 const WeatherConditionIcon = styled.i`
-  font-size: 108px;
-  margin: 0 10px;
+  font-size: ${props => (props.fs ? props.fs : 18)}px;
+  margin: 0 10px 15px;
 `;
 const WeatherConditionIcons = styled.div`
   display: flex;
@@ -45,7 +45,7 @@ const weatherIcons = {
 };
 
 class WeatherCondition extends React.Component {
-  parseWeatherCondition(array) {
+  getWeatherConditionDescription(array) {
     let weatherCondition = [];
 
     array.forEach(condition => {
@@ -55,7 +55,7 @@ class WeatherCondition extends React.Component {
     return weatherCondition.join(', ');
   }
 
-  parseWeatherConditionIcon(array) {
+  getWeatherConditionIcon(array) {
     let weatherConditionIcon = [];
 
     array.forEach(condition => {
@@ -66,23 +66,28 @@ class WeatherCondition extends React.Component {
   }
 
   render() {
-    const icons = this.parseWeatherConditionIcon(this.props.value).map(
+    const icons = this.getWeatherConditionIcon(this.props.value).map(
       (icon, i) => {
         return (
           <WeatherConditionIcon
             key={i}
             className={`wi ${weatherIcons[icon]}`}
+            fs={this.props.fs}
           />
         );
       }
     );
 
-    const value = this.parseWeatherCondition(this.props.value);
+    const value = this.props.description && (
+      <WeatherConditionDescription>
+        {this.getWeatherConditionDescription(this.props.value)}
+      </WeatherConditionDescription>
+    );
 
     return (
       <WeatherConditionWrapper>
         <WeatherConditionIcons>{icons}</WeatherConditionIcons>
-        <WeatherConditionValue>{value}</WeatherConditionValue>
+        {value}
       </WeatherConditionWrapper>
     );
   }
