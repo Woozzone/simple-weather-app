@@ -54,8 +54,14 @@ class HourlyWeather extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.activeIndex !== this.props.activeIndex) {
-      this.props.onClick(this.props.activeIndex, this.setSlideIndent);
+      this.props.onClick(this.props.activeIndex);
+      this.setSlideIndent(this.props.activeIndex);
     }
+  }
+
+  handleClick(i) {
+    this.props.onClick(i);
+    this.setSlideIndent(i);
   }
 
   getTemperature(item) {
@@ -103,7 +109,7 @@ class HourlyWeather extends React.Component {
           className={activeClass}
           key={i}
           onClick={() => {
-            this.props.onClick(i, this.setSlideIndent);
+            this.handleClick(i);
           }}
         >
           {this.getWeatherCondition(item)}

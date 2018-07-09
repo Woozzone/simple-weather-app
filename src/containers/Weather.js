@@ -30,7 +30,7 @@ class Weather extends React.Component {
     });
   };
 
-  setCurrentWeather = (index, callback) => {
+  setCurrentWeather = index => {
     this.setState(prevState => ({
       active: prevState.response.list[index],
       activeIndex: index,
@@ -40,10 +40,6 @@ class Weather extends React.Component {
       humidity: prevState.response.list[index].main.humidity,
       windSpeed: prevState.response.list[index].wind.speed
     }));
-
-    if (callback) {
-      callback(index);
-    }
   };
 
   onWheel = e => {
