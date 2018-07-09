@@ -63,8 +63,8 @@ class Weather extends React.Component {
   componentDidMount() {
     this.getCoords().then(position => {
       this.setState({
-        latitude: Number.parseFloat(position.coords.latitude).toFixed(2),
-        longitude: Number.parseFloat(position.coords.longitude).toFixed(2)
+        latitude: Number.parseFloat(position.coords.latitude).toFixed(4),
+        longitude: Number.parseFloat(position.coords.longitude).toFixed(4)
       });
 
       const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${
