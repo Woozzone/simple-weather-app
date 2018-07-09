@@ -46,18 +46,18 @@ class Weather extends React.Component {
     }
   };
 
-  onWheel = (e, index, callback) => {
+  onWheel = e => {
+    let delta = 0;
+
     if (e.deltaY > 0) {
-      index < 39 && index++;
+      this.state.activeIndex < 39 && delta++;
     } else {
-      index > 0 && index--;
+      this.state.activeIndex > 0 && delta--;
     }
 
-    this.setCurrentWeather(index);
-
-    if (callback) {
-      callback(index);
-    }
+    this.setState(prevState => ({
+      activeIndex: prevState.activeIndex + delta
+    }));
   };
 
   componentDidMount() {

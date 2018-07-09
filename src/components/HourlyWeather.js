@@ -52,6 +52,12 @@ class HourlyWeather extends React.Component {
     this.slideIndent = 0;
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.activeIndex !== this.props.activeIndex) {
+      this.props.onClick(this.props.activeIndex, this.setSlideIndent);
+    }
+  }
+
   getTemperature(item) {
     return <Temperature value={Math.round(item.main.temp)} />;
   }
@@ -110,9 +116,7 @@ class HourlyWeather extends React.Component {
     return (
       <HourlyWeatherWrapper>
         <HourlyWeatherSlide
-          onWheel={e =>
-            this.props.onWheel(e, this.props.activeIndex, this.setSlideIndent)
-          }
+          onWheel={e => this.props.onWheel(e)}
           slideIndent={this.slideIndent}
         >
           {list}
