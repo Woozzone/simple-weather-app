@@ -22,20 +22,18 @@ class Weather extends React.Component {
     this.state = {
       isLoaded: false
     };
-
-    this.getCoords = this.getCoords.bind(this);
-    this.setCurrentWeather = this.setCurrentWeather.bind(this);
   }
 
-  getCoords() {
+  getCoords = () => {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve);
     });
-  }
+  };
 
-  setCurrentWeather(index, callback) {
+  setCurrentWeather = (index, callback) => {
     this.setState(prevState => ({
       active: prevState.response.list[index],
+      activeIndex: index,
       temperature: Math.round(prevState.response.list[index].main.temp),
       weatherCondition: prevState.response.list[index].weather,
       date: prevState.response.list[index].dt,
@@ -46,7 +44,21 @@ class Weather extends React.Component {
     if (callback) {
       callback(index);
     }
-  }
+  };
+
+  onWheel = (e, index, callback) => {
+    if (e.deltaY > 0) {
+      index < 39 && index++;
+    } else {
+      index > 0 && index--;
+    }
+
+    this.setCurrentWeather(index);
+
+    if (callback) {
+      callback(index);
+    }
+  };
 
   componentDidMount() {
     this.getCoords().then(position => {
@@ -69,6 +81,7 @@ class Weather extends React.Component {
             isLoaded: true,
             place: result.city.name,
             active: result.list[0],
+            activeIndex: 0,
             temperature: Math.round(result.list[0].main.temp),
             weatherCondition: result.list[0].weather,
             date: result.list[0].dt,
@@ -107,7 +120,8 @@ class Weather extends React.Component {
           <HourlyWeather
             onClick={this.setCurrentWeather}
             list={this.state.list}
-            active={this.state.active}
+            activeIndex={this.state.activeIndex}
+            onWheel={this.onWheel}
           />
         </div>
       );

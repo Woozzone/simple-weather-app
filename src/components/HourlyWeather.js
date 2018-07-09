@@ -50,7 +50,6 @@ class HourlyWeather extends React.Component {
     super(props);
 
     this.slideIndent = 0;
-    this.onWheel = this.onWheel.bind(this);
   }
 
   getTemperature(item) {
@@ -69,7 +68,7 @@ class HourlyWeather extends React.Component {
     return <WeatherCondition value={item.weather} />;
   }
 
-  calculateSlideIndent = i => {
+  setSlideIndent = i => {
     let indent;
     switch (i) {
       case 0:
@@ -90,36 +89,15 @@ class HourlyWeather extends React.Component {
     this.slideIndent = -i * ITEM_WIDTH + indent;
   };
 
-  onWheel(e) {
-    let active = this.props.active;
-    let indent = 0;
-    let delta = 0;
-    let forward = e.deltaY > 0;
-    if (forward) {
-      this.slideIndent > -2240 && (indent = -ITEM_WIDTH);
-      this.state.currentItem < 39 && (delta = 1);
-    } else {
-      this.state.slideIndent < 0 && (indent = ITEM_WIDTH);
-      this.state.currentItem > 0 && (delta = -1);
-    }
-
-    this.setState(prevState => {
-      return {
-        slideIndent: prevState.slideIndent + indent,
-        currentItem: prevState.currentItem + delta
-      };
-    });
-  }
-
   render() {
     const list = this.props.list.map((item, i) => {
-      const activeClass = this.props.active === item && 'active';
+      const activeClass = this.props.activeIndex === i && 'active';
       return (
         <HourlyWeatherItem
           className={activeClass}
           key={i}
           onClick={() => {
-            this.props.onClick(i, this.calculateSlideIndent);
+            this.props.onClick(i, this.setSlideIndent);
           }}
         >
           {this.getWeatherCondition(item)}
@@ -132,7 +110,9 @@ class HourlyWeather extends React.Component {
     return (
       <HourlyWeatherWrapper>
         <HourlyWeatherSlide
-          onWheel={this.onWheel}
+          onWheel={e =>
+            this.props.onWheel(e, this.props.activeIndex, this.setSlideIndent)
+          }
           slideIndent={this.slideIndent}
         >
           {list}
