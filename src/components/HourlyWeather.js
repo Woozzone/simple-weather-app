@@ -89,10 +89,10 @@ class HourlyWeather extends React.Component {
       case 1:
         indent = ITEM_WIDTH;
         break;
-      case 38:
+      case this.props.list.length - 2:
         indent = ITEM_WIDTH * 3;
         break;
-      case 39:
+      case this.props.list.length - 1:
         indent = ITEM_WIDTH * 4;
         break;
       default:

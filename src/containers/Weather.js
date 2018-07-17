@@ -46,7 +46,7 @@ class Weather extends React.Component {
     let delta = 0;
 
     if (e.deltaY > 0) {
-      this.state.activeIndex < 39 && delta++;
+      this.state.activeIndex < this.state.list.length - 1 && delta++;
     } else {
       this.state.activeIndex > 0 && delta--;
     }
