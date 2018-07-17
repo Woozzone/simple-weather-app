@@ -53,9 +53,9 @@ class HourlyWeather extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.activeIndex !== this.props.activeIndex) {
-      this.props.onClick(this.props.activeIndex);
-      this.setSlideIndent(this.props.activeIndex);
+    if (prevProps.activeHourIndex !== this.props.activeHourIndex) {
+      this.props.onClick(this.props.activeHourIndex);
+      this.setSlideIndent(this.props.activeHourIndex);
     }
   }
 
@@ -103,7 +103,7 @@ class HourlyWeather extends React.Component {
 
   render() {
     const list = this.props.list.map((item, i) => {
-      const activeClass = this.props.activeIndex === i && 'active';
+      const activeClass = this.props.activeHourIndex === i && 'active';
       return (
         <HourlyWeatherItem
           className={activeClass}

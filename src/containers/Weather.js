@@ -32,8 +32,7 @@ class Weather extends React.Component {
 
   setCurrentWeather = index => {
     this.setState(prevState => ({
-      active: prevState.response.list[index],
-      activeIndex: index,
+      activeHourIndex: index,
       temperature: Math.round(prevState.response.list[index].main.temp),
       weatherCondition: prevState.response.list[index].weather,
       date: prevState.response.list[index].dt,
@@ -46,13 +45,13 @@ class Weather extends React.Component {
     let delta = 0;
 
     if (e.deltaY > 0) {
-      this.state.activeIndex < this.state.list.length - 1 && delta++;
+      this.state.activeHourIndex < this.state.list.length - 1 && delta++;
     } else {
-      this.state.activeIndex > 0 && delta--;
+      this.state.activeHourIndex > 0 && delta--;
     }
 
     this.setState(prevState => ({
-      activeIndex: prevState.activeIndex + delta
+      activeHourIndex: prevState.activeHourIndex + delta
     }));
   };
 
@@ -76,8 +75,7 @@ class Weather extends React.Component {
             response: result,
             isLoaded: true,
             place: result.city.name,
-            active: result.list[0],
-            activeIndex: 0,
+            activeHourIndex: 0,
             temperature: Math.round(result.list[0].main.temp),
             weatherCondition: result.list[0].weather,
             date: result.list[0].dt,
@@ -116,7 +114,7 @@ class Weather extends React.Component {
           <HourlyWeather
             onClick={this.setCurrentWeather}
             list={this.state.list}
-            activeIndex={this.state.activeIndex}
+            activeHourIndex={this.state.activeHourIndex}
             onWheel={this.onWheel}
           />
         </div>
