@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const TemperatureWrapper = styled.div`
   font-family: 'Righteous', cursive;
@@ -22,6 +23,11 @@ const Temperature = props => {
       <Sup fs={props.fs}>o</Sup>
     </TemperatureWrapper>
   );
+};
+
+Temperature.propTypes = {
+  value: PropTypes.number,
+  fs: PropTypes.number
 };
 
 export default Temperature;

@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
+import { WEATHER_ICONS } from '../constants';
 
 const WeatherConditionWrapper = styled.div`
   text-align: center;
@@ -22,27 +25,6 @@ const WeatherConditionIcons = styled.div`
   display: flex;
   justify-content: center;
 `;
-
-const weatherIcons = {
-  '01d': 'wi-day-sunny',
-  '02d': 'wi-day-cloudy',
-  '03d': 'wi-cloud',
-  '04d': 'wi-cloudy',
-  '09d': 'wi-rain',
-  '10d': 'wi-day-rain',
-  '11d': 'wi-day-lightning',
-  '13d': 'wi-day-snow',
-  '50d': 'wi-fog',
-  '01n': 'wi-night-clear',
-  '02n': 'wi-night-alt-cloudy',
-  '03n': 'wi-cloud',
-  '04n': 'wi-cloudy',
-  '09n': 'wi-rain',
-  '10n': 'wi-night-alt-rain',
-  '11n': 'wi-night-alt-thunderstorm',
-  '13n': 'wi-night-snow',
-  '50n': 'wi-fog'
-};
 
 class WeatherCondition extends React.Component {
   getWeatherConditionDescription(array) {
@@ -71,7 +53,7 @@ class WeatherCondition extends React.Component {
         return (
           <WeatherConditionIcon
             key={i}
-            className={`wi ${weatherIcons[icon]}`}
+            className={`wi ${WEATHER_ICONS[icon]}`}
             fs={this.props.fs}
           />
         );
@@ -92,5 +74,11 @@ class WeatherCondition extends React.Component {
     );
   }
 }
+
+WeatherCondition.propTypes = {
+  value: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fs: PropTypes.number,
+  description: PropTypes.bool
+};
 
 export default WeatherCondition;

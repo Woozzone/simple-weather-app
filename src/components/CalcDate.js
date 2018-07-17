@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
+import { FULL_DAYS, MONTHS } from '../constants';
 
 const DateWrapper = styled.div`
   text-align: center;
@@ -12,32 +15,13 @@ const DateWrapper = styled.div`
 
 const CalcDate = props => {
   const date = new Date(props.value * 1000);
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-  const days = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday'
-  ];
-  const day = days[date.getDay()];
-  const month = months[date.getMonth()];
+  const day = FULL_DAYS[date.getDay()];
+  const month = MONTHS[date.getMonth()];
   return <DateWrapper>{`${day}, ${date.getDate()} ${month}`}</DateWrapper>;
+};
+
+CalcDate.propTypes = {
+  value: PropTypes.number.isRequired
 };
 
 export default CalcDate;

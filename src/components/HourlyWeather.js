@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 // Components
 import Temperature from './Temperature';
@@ -131,5 +132,12 @@ class HourlyWeather extends React.Component {
     );
   }
 }
+
+HourlyWeather.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  onWheel: PropTypes.func.isRequired,
+  list: PropTypes.arrayOf(PropTypes.object),
+  itemIndex: PropTypes.number
+};
 
 export default HourlyWeather;

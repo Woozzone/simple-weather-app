@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const CityWrapper = styled.div`
   text-transform: capitalize;
@@ -12,6 +13,10 @@ const CityWrapper = styled.div`
 
 const City = props => {
   return <CityWrapper>{props.name}</CityWrapper>;
+};
+
+City.propTypes = {
+  name: PropTypes.string.isRequired
 };
 
 export default City;

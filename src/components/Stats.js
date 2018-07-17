@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StatsWrapper = styled.div`
   width: 100%;
@@ -33,6 +34,11 @@ const Stats = props => {
       </StatsItem>
     </StatsWrapper>
   );
+};
+
+Stats.propTypes = {
+  humidity: PropTypes.number,
+  windSpeed: PropTypes.number
 };
 
 export default Stats;
