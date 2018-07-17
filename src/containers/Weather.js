@@ -44,7 +44,7 @@ class Weather extends React.Component {
     }));
   };
 
-  onWheel = e => {
+  hourOnWheel = e => {
     let delta = 0;
 
     if (e.deltaY > 0) {
@@ -122,7 +122,7 @@ class Weather extends React.Component {
             onClick={this.setCurrentWeather}
             list={this.state.list}
             itemIndex={this.state.current.itemIndex}
-            onWheel={this.onWheel}
+            onWheel={this.hourOnWheel}
           />
         </div>
       );
