@@ -32,12 +32,15 @@ class Weather extends React.Component {
 
   setCurrentWeather = index => {
     this.setState(prevState => ({
-      activeHourIndex: index,
-      temperature: Math.round(prevState.response.list[index].main.temp),
-      weatherCondition: prevState.response.list[index].weather,
-      date: prevState.response.list[index].dt,
-      humidity: prevState.response.list[index].main.humidity,
-      windSpeed: prevState.response.list[index].wind.speed
+      current: {
+        ...prevState.current,
+        itemIndex: index,
+        temperature: Math.round(prevState.list[index].main.temp),
+        weatherCondition: prevState.list[index].weather,
+        date: prevState.list[index].dt,
+        humidity: prevState.list[index].main.humidity,
+        windSpeed: prevState.list[index].wind.speed
+      }
     }));
   };
 
@@ -45,13 +48,16 @@ class Weather extends React.Component {
     let delta = 0;
 
     if (e.deltaY > 0) {
-      this.state.activeHourIndex < this.state.list.length - 1 && delta++;
+      this.state.current.itemIndex < this.state.list.length - 1 && delta++;
     } else {
-      this.state.activeHourIndex > 0 && delta--;
+      this.state.current.itemIndex > 0 && delta--;
     }
 
     this.setState(prevState => ({
-      activeHourIndex: prevState.activeHourIndex + delta
+      current: {
+        ...prevState.current,
+        itemIndex: prevState.current.itemIndex + delta
+      }
     }));
   };
 
@@ -72,16 +78,17 @@ class Weather extends React.Component {
         .then(res => res.json())
         .then(result => {
           this.setState({
-            response: result,
             isLoaded: true,
-            place: result.city.name,
-            activeHourIndex: 0,
-            temperature: Math.round(result.list[0].main.temp),
-            weatherCondition: result.list[0].weather,
-            date: result.list[0].dt,
-            humidity: result.list[0].main.humidity,
-            windSpeed: result.list[0].wind.speed,
-            list: result.list
+            list: result.list,
+            current: {
+              place: result.city.name,
+              temperature: Math.round(result.list[0].main.temp),
+              weatherCondition: result.list[0].weather,
+              date: result.list[0].dt,
+              humidity: result.list[0].main.humidity,
+              windSpeed: result.list[0].wind.speed,
+              itemIndex: 0
+            }
           });
         })
         .catch(() => {
@@ -98,23 +105,23 @@ class Weather extends React.Component {
         <div>
           <CurrentWeather>
             <WeatherCondition
-              value={this.state.weatherCondition}
+              value={this.state.current.weatherCondition}
               fs={72}
               description
             />
-            <Temperature value={this.state.temperature} fs={72} />
+            <Temperature value={this.state.current.temperature} fs={72} />
             <Stats
-              windSpeed={this.state.windSpeed}
-              humidity={this.state.humidity}
+              windSpeed={this.state.current.windSpeed}
+              humidity={this.state.current.humidity}
             />
-            <CalcDate value={this.state.date} />
-            <City name={this.state.place} />
+            <CalcDate value={this.state.current.date} />
+            <City name={this.state.current.place} />
           </CurrentWeather>
 
           <HourlyWeather
             onClick={this.setCurrentWeather}
             list={this.state.list}
-            activeHourIndex={this.state.activeHourIndex}
+            itemIndex={this.state.current.itemIndex}
             onWheel={this.onWheel}
           />
         </div>
