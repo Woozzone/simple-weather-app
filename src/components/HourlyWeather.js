@@ -12,7 +12,7 @@ const HourlyWeatherWrapper = styled.div`
   position: relative;
   left: 50%;
   width: 320px;
-  margin-top: 50px;
+  margin-top: 25px;
   overflow: hidden;
   transform: translateX(-50%);
 `;

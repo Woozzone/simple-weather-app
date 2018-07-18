@@ -9,6 +9,7 @@ import WeatherCondition from '../components/WeatherCondition';
 import CalcDate from '../components/CalcDate';
 import Stats from '../components/Stats';
 import HourlyWeather from '../components/HourlyWeather';
+import DailyWeather from '../components/DailyWeather';
 
 const CurrentWeather = styled.div`
   position: relative;
@@ -117,6 +118,12 @@ class Weather extends React.Component {
             <CalcDate value={this.state.current.date} />
             <City name={this.state.current.place} />
           </CurrentWeather>
+
+          <DailyWeather
+            onClick={this.setCurrentWeather}
+            list={this.state.list}
+            date={this.state.current.date}
+          />
 
           <HourlyWeather
             onClick={this.setCurrentWeather}
