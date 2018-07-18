@@ -21,6 +21,7 @@ const WeatherConditionIcon = styled.i`
   font-size: ${props => (props.fs ? props.fs : 18)}px;
   margin: 5px 10px ${props => (props.fs ? props.fs / 5 : 5)}px;
 `;
+
 const WeatherConditionIcons = styled.div`
   display: flex;
   justify-content: center;
@@ -28,23 +29,19 @@ const WeatherConditionIcons = styled.div`
 
 class WeatherCondition extends React.Component {
   getWeatherConditionDescription(array) {
-    let weatherCondition = [];
-
-    array.forEach(condition => {
-      weatherCondition.push(condition.description);
-    });
-
-    return weatherCondition.join(', ');
+    return array
+      .reduce((acc, condition) => {
+        acc.push(condition.description);
+        return acc;
+      }, [])
+      .join(', ');
   }
 
   getWeatherConditionIcon(array) {
-    let weatherConditionIcon = [];
-
-    array.forEach(condition => {
-      weatherConditionIcon.push(condition.icon);
-    });
-
-    return weatherConditionIcon;
+    return array.reduce((acc, condition) => {
+      acc.push(condition.icon);
+      return acc;
+    }, []);
   }
 
   render() {
