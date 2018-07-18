@@ -13,7 +13,7 @@ const DailyWeatherWrapper = styled.div`
 const Button = styled.button`
   background: transparent;
   color: #fff;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   border-radius: 50%;
   padding: 10px 0;
   width: 48px;
