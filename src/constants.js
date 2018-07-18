@@ -45,3 +45,5 @@ export const WEATHER_ICONS = {
   '13n': 'wi-night-snow',
   '50n': 'wi-fog'
 };
+
+export const ITEM_WIDTH = 64;

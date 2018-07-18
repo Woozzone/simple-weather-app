@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 // Components
 import Temperature from './Temperature';
 import WeatherCondition from './WeatherCondition';
-
-const ITEM_WIDTH = 64;
+import { ITEM_WIDTH } from '../constants';
 
 const HourlyWeatherWrapper = styled.div`
   position: relative;
