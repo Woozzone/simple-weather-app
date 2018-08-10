@@ -10,12 +10,10 @@ const ContainerWrapper = styled.div`
   align-items: center;
 `;
 
-const Container = props => {
-  return (
-    <ContainerWrapper backgroundPath={props.backgroundPath}>
-      {props.children}
-    </ContainerWrapper>
-  );
-};
+const Container = props => (
+  <ContainerWrapper backgroundPath={props.backgroundPath}>
+    {props.children}
+  </ContainerWrapper>
+);
 
 export default Container;

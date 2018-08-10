@@ -23,18 +23,16 @@ const I = styled.i`
   color: #fff;
 `;
 
-const Stats = props => {
-  return (
-    <StatsWrapper>
-      <StatsItem>
-        <I className="wi wi-raindrop" /> {`${props.humidity}%`}
-      </StatsItem>
-      <StatsItem>
-        <I className="wi wi-strong-wind" /> {`${props.windSpeed} m/s`}
-      </StatsItem>
-    </StatsWrapper>
-  );
-};
+const Stats = props => (
+  <StatsWrapper>
+    <StatsItem>
+      <I className="wi wi-raindrop" /> {`${props.humidity}%`}
+    </StatsItem>
+    <StatsItem>
+      <I className="wi wi-strong-wind" /> {`${props.windSpeed} m/s`}
+    </StatsItem>
+  </StatsWrapper>
+);
 
 Stats.propTypes = {
   humidity: PropTypes.number,

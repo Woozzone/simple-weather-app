@@ -16,14 +16,12 @@ const Sup = styled.sup`
   font-size: ${props => (props.fs ? props.fs / 2 : 9)}px;
 `;
 
-const Temperature = props => {
-  return (
-    <TemperatureWrapper fs={props.fs}>
-      {props.value}
-      <Sup fs={props.fs}>o</Sup>
-    </TemperatureWrapper>
-  );
-};
+const Temperature = props => (
+  <TemperatureWrapper fs={props.fs}>
+    {props.value}
+    <Sup fs={props.fs}>o</Sup>
+  </TemperatureWrapper>
+);
 
 Temperature.propTypes = {
   value: PropTypes.number,

@@ -11,9 +11,7 @@ const CityWrapper = styled.div`
   margin-top: 5px;
 `;
 
-const City = props => {
-  return <CityWrapper>{props.name}</CityWrapper>;
-};
+const City = props => <CityWrapper>{props.name}</CityWrapper>;
 
 City.propTypes = {
   name: PropTypes.string.isRequired

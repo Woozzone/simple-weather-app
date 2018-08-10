@@ -48,14 +48,17 @@ const Time = styled.div`
 class HourlyWeather extends React.Component {
   constructor(props) {
     super(props);
-
-    this.slideIndent = 0;
+    this.state = {
+      slideIndent: 0
+    };
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.itemIndex !== this.props.itemIndex) {
-      this.props.onClick(this.props.itemIndex);
-      this.setSlideIndent(this.props.itemIndex);
+    const { itemIndex } = this.props;
+
+    if (prevProps.itemIndex !== itemIndex) {
+      this.props.onClick(itemIndex);
+      this.setSlideIndent(itemIndex);
     }
   }
 
@@ -82,28 +85,37 @@ class HourlyWeather extends React.Component {
 
   setSlideIndent = i => {
     let indent;
+    const { listLength } = this.props;
     switch (i) {
       case 0:
         indent = 0;
         break;
+
       case 1:
         indent = ITEM_WIDTH;
         break;
-      case this.props.list.length - 2:
+
+      case listLength - 2:
         indent = ITEM_WIDTH * 3;
         break;
-      case this.props.list.length - 1:
+
+      case listLength - 1:
         indent = ITEM_WIDTH * 4;
         break;
+
       default:
         indent = ITEM_WIDTH * 2;
     }
-    this.slideIndent = -i * ITEM_WIDTH + indent;
+
+    this.setState({
+      slideIndent: -i * ITEM_WIDTH + indent
+    });
   };
 
   render() {
     const list = this.props.list.map((item, i) => {
       const activeClass = this.props.itemIndex === i && 'active';
+
       return (
         <HourlyWeatherItem
           className={activeClass}
@@ -123,7 +135,7 @@ class HourlyWeather extends React.Component {
       <HourlyWeatherWrapper>
         <HourlyWeatherSlide
           onWheel={e => this.props.onWheel(e)}
-          slideIndent={this.slideIndent}
+          slideIndent={this.state.slideIndent}
         >
           {list}
         </HourlyWeatherSlide>
